@@ -15,14 +15,12 @@ class AppRemoteDataSourceImpl implements AppRemoteDataSource {
 
   @override
   Future<List<Ingredient>> getIngredients() async {
-    var data = await client.get(
+    var response = await client.get(
       Uri.parse('${Constant.baseUrl}/ingredients/'),
     );
-
-    if (data.statusCode.toString().startsWith("2")) {
-      List<Ingredient> response =
-          (data as List).map((e) => Ingredient.fromJson(e)).toList();
-      return response;
+    if (response.statusCode.toString().startsWith("2")) {
+      var data = ingredientFromJson(response.body);
+      return data;
     } else {
       throw ServerException();
     }
