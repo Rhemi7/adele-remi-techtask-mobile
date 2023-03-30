@@ -1,3 +1,5 @@
+import '../../../data/model/ingredient_model.dart';
+
 abstract class GetIngredientsState{
   const GetIngredientsState();
 }
@@ -11,7 +13,8 @@ class GetIngredientsLoading extends GetIngredientsState {
 }
 
 class GetIngredientsLoaded extends GetIngredientsState {
-  const GetIngredientsLoaded();
+  List<Ingredient> ingredients;
+  GetIngredientsLoaded(this.ingredients);
 }
 
 class GetIngredientsError extends GetIngredientsState {
