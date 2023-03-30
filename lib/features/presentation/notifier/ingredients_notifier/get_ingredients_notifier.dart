@@ -9,7 +9,7 @@ class GetIngredientsNotifier extends StateNotifier<GetIngredientsState> {
   GetIngredientsNotifier(this.getIngredients)
       : super(const GetIngredientsInitial());
 
-  getFridgeIngredient() async {
+  void getFridgeIngredient() async {
     state = const GetIngredientsLoading();
     var result = await getIngredients(NoParams());
     result.fold(
