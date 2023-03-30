@@ -5,6 +5,8 @@ import 'package:tech_task/features/data/datasources/app_remote_data_source.dart'
 import 'package:tech_task/features/data/model/ingredient_model.dart';
 import 'package:tech_task/features/data/repository/app_repository_impl.dart';
 
+import '../../../data/test_ingredient_model.dart';
+
 class MockAppRemoteDataSource extends Mock implements AppRemoteDataSource{}
 
 void main() {
@@ -15,11 +17,6 @@ void main() {
   repository = AppRepositoryImpl(mockAppRemoteDataSource);
 
   group("Get Ingredients", () {
-    final testIngredientModel = [
-      Ingredient(title: "Ham", useBy: DateTime.parse("2020-11-25")),
-      Ingredient(title: "Cheese", useBy: DateTime.parse("2020-01-08")),
-      Ingredient(title: "Bread", useBy: DateTime.parse("2020-11-01")),
-    ];
 
     test("Should return remote data", () async {
       when(mockAppRemoteDataSource.getIngredients()).thenAnswer((_) async => testIngredientModel);

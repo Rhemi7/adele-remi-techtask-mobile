@@ -6,18 +6,14 @@ import 'package:tech_task/features/data/model/ingredient_model.dart';
 import 'package:tech_task/features/domain/repository/app_repository.dart';
 import 'package:tech_task/features/domain/usecase/get_ingredients.dart';
 
+import '../../../data/test_ingredient_model.dart';
+
 class MockAppRepository extends Mock implements AppRepository {}
 
 void main() {
 
   MockAppRepository repository;
   GetIngredients getIngredients;
-
-  final testIngredientModel = [
-    Ingredient(title: "Ham", useBy: DateTime.parse("2020-11-25")),
-    Ingredient(title: "Cheese", useBy: DateTime.parse("2020-01-08")),
-    Ingredient(title: "Bread", useBy: DateTime.parse("2020-11-01")),
-  ];
 
   test("should get ingredient response from the repository", () async {
     repository = MockAppRepository();
