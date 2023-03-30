@@ -5,6 +5,7 @@ import 'package:tech_task/constants/constants.dart';
 import 'package:tech_task/core/error/failure.dart';
 import 'package:tech_task/features/data/datasources/app_remote_data_source.dart';
 import 'package:tech_task/features/data/model/ingredient_model.dart';
+import 'package:tech_task/features/data/model/recipe_model.dart';
 import '../../../data/data_reader.dart';
 
 class MockClient extends Mock implements http.Client {}
@@ -14,6 +15,7 @@ void main() {
   late AppRemoteDataSourceImpl dataSource;
 
   var ingUrl = Uri.parse("${Constant.baseUrl}/ingredients/");
+  var recipeUrl = Uri.parse("${Constant.baseUrl}/recipes?ingredients=Bread");
 
   setUp(() {
     client = MockClient();
@@ -34,6 +36,14 @@ void main() {
 
       expect(() => dataSource.getIngredients(),
           throwsA(const TypeMatcher<ServerException>()));
+    });
+  });
+
+  group("Get Recipes", () {
+    test("Returns a Recipe Response from Remote server", () async {
+      when(client.get(recipeUrl)).thenAnswer((_) async => http.Response(dataReader("recipe_response.json"), 200));
+
+      expect(await dataSource.getRecipes("Bread"), isA<List<Recipe>>());
     });
   });
 }
