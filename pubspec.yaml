@@ -35,6 +35,8 @@ dependencies:
   dartz: ^0.10.0
   #  Riverpod is used for state management
   hooks_riverpod: ^1.0.4
+  #   Used to format date
+  date_format: ^2.0.7
 
 dev_dependencies:
   flutter_test:
