@@ -23,6 +23,18 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  #  Http used for making network calls
+  http: ^0.13.0
+  #  Get it is used for dependency injection
+  get_it: ^7.2.0
+  #  Equatable is used for showing equality between objects
+  equatable: ^2.0.2
+  #  Mockito used for testing
+  mockito: ^5.0.9
+  #  Dartz is used for functional programming
+  dartz: ^0.10.0
+  #  Riverpod is used for state management
+  hooks_riverpod: ^1.0.4
 
 dev_dependencies:
   flutter_test:
