@@ -1,6 +1,8 @@
 import 'package:date_format/date_format.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_task/features/presentation/widgets/button.dart';
+import 'package:tech_task/utils/resolution.dart';
 
 class DateScreen extends ConsumerStatefulWidget {
   const DateScreen({Key? key}) : super(key: key);
@@ -32,8 +34,9 @@ class _DateScreenState extends ConsumerState<DateScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Spacer(),
             const Padding(
-              padding: EdgeInsets.symmetric( vertical: 15.0),
+              padding: EdgeInsets.symmetric(vertical: 15.0),
               child: Text("Date Selected"),
             ),
             Container(
@@ -54,6 +57,13 @@ class _DateScreenState extends ConsumerState<DateScreen> {
                   "Select Date",
                 ),
               ),
+            ),
+            Spacer(),
+            PrimaryButton(
+              color: Colors.red,
+              width: Resolution.screenWidth(context),
+              inActiveButtonColor: Colors.red,
+              text: "Continue",
             )
           ],
         ),
