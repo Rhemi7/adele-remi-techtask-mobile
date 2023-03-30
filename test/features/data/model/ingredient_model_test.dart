@@ -7,7 +7,6 @@ import '../../../data/data_reader.dart';
 import '../../../data/test_ingredient_model.dart';
 
 main() {
-
   test("should be a subclass of Ingredient response", () {
     expect(testIngredientModel, isA<List<Ingredient>>());
   });

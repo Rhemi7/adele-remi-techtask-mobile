@@ -8,7 +8,7 @@ import 'package:tech_task/features/data/repository/app_repository_impl.dart';
 import '../../../data/test_ingredient_model.dart';
 import '../../../data/test_recipe_model.dart';
 
-class MockAppRemoteDataSource extends Mock implements AppRemoteDataSource{}
+class MockAppRemoteDataSource extends Mock implements AppRemoteDataSource {}
 
 void main() {
   late MockAppRemoteDataSource mockAppRemoteDataSource;
@@ -18,9 +18,9 @@ void main() {
   repository = AppRepositoryImpl(mockAppRemoteDataSource);
 
   group("Get Ingredients", () {
-
     test("Should return remote data", () async {
-      when(mockAppRemoteDataSource.getIngredients()).thenAnswer((_) async => testIngredientModel);
+      when(mockAppRemoteDataSource.getIngredients())
+          .thenAnswer((_) async => testIngredientModel);
 
       final result = await repository.getIngredients();
 
@@ -28,15 +28,13 @@ void main() {
 
       expect(result, equals(Right(testIngredientModel)));
     });
-
   });
 
   group("Get Recipes", () {
-
     test("Should return remote data", () async {
-
       // arrange
-      when(mockAppRemoteDataSource.getRecipes("Bread")).thenAnswer((_) async => testRecipeModel);
+      when(mockAppRemoteDataSource.getRecipes("Bread"))
+          .thenAnswer((_) async => testRecipeModel);
       // act
       final result = await repository.getRecipes("Bread");
       // assert
@@ -44,6 +42,5 @@ void main() {
 
       expect(result, equals(Right(testRecipeModel)));
     });
-
   });
 }

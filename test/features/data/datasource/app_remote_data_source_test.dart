@@ -22,10 +22,10 @@ void main() {
     dataSource = AppRemoteDataSourceImpl(client);
   });
 
-
   group("Get Ingredients", () {
     test("Returns an Ingredient Response", () async {
-      when(client.get(ingUrl)).thenAnswer((_) async => http.Response(dataReader("ingredient_response.json"), 200));
+      when(client.get(ingUrl)).thenAnswer((_) async =>
+          http.Response(dataReader("ingredient_response.json"), 200));
 
       expect(await dataSource.getIngredients(), isA<List<Ingredient>>());
     });
@@ -41,7 +41,8 @@ void main() {
 
   group("Get Recipes", () {
     test("Returns a Recipe Response from Remote server", () async {
-      when(client.get(recipeUrl)).thenAnswer((_) async => http.Response(dataReader("recipe_response.json"), 200));
+      when(client.get(recipeUrl)).thenAnswer(
+          (_) async => http.Response(dataReader("recipe_response.json"), 200));
 
       expect(await dataSource.getRecipes("Bread"), isA<List<Recipe>>());
     });

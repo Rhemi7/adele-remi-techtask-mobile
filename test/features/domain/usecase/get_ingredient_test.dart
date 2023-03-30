@@ -11,7 +11,6 @@ import '../../../data/test_ingredient_model.dart';
 class MockAppRepository extends Mock implements AppRepository {}
 
 void main() {
-
   MockAppRepository repository;
   GetIngredients getIngredients;
 
@@ -19,7 +18,8 @@ void main() {
     repository = MockAppRepository();
     getIngredients = GetIngredients(repository);
 
-    when(repository.getIngredients()).thenAnswer((_) async => Right(testIngredientModel));
+    when(repository.getIngredients())
+        .thenAnswer((_) async => Right(testIngredientModel));
 
     final result = await getIngredients(NoParams());
 

@@ -9,7 +9,6 @@ import '../../../data/test_recipe_model.dart';
 class MockAppRepository extends Mock implements AppRepository {}
 
 void main() {
-
   MockAppRepository repository;
   GetRecipes getRecipes;
 
@@ -17,7 +16,8 @@ void main() {
     repository = MockAppRepository();
     getRecipes = GetRecipes(repository);
     //stub the method
-    when(repository.getRecipes("Bread")).thenAnswer((_) async => Right(testRecipeModel));
+    when(repository.getRecipes("Bread"))
+        .thenAnswer((_) async => Right(testRecipeModel));
     // act
     final result = await getRecipes("Bread");
     // assert
