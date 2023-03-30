@@ -5,11 +5,13 @@
 
 import 'dart:convert';
 
+import 'package:tech_task/features/domain/entity/ingredient_entity.dart';
+
 List<Ingredient> ingredientFromJson(String str) => List<Ingredient>.from(json.decode(str).map((x) => Ingredient.fromJson(x)));
 
 String ingredientToJson(List<Ingredient> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Ingredient {
+class Ingredient extends IngredientEntity{
   Ingredient({
     this.title,
     this.useBy,
