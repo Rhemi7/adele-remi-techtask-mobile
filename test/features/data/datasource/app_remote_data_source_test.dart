@@ -27,5 +27,13 @@ void main() {
 
       expect(await dataSource.getIngredients(), isA<List<Ingredient>>());
     });
+
+    test('throws an exception if the http call results in an error', () {
+      when(client.get(ingUrl))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
+
+      expect(() => dataSource.getIngredients(),
+          throwsA(const TypeMatcher<ServerException>()));
+    });
   });
 }
