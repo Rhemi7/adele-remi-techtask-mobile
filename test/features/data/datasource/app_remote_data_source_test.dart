@@ -46,4 +46,12 @@ void main() {
       expect(await dataSource.getRecipes("Bread"), isA<List<Recipe>>());
     });
   });
+
+  test('throws an exception if the http call results in an error', () {
+    when(client.get(recipeUrl))
+        .thenAnswer((_) async => http.Response('Not Found', 404));
+
+    expect(() => dataSource.getRecipes("Bread"),
+        throwsA(const TypeMatcher<ServerException>()));
+  });
 }
