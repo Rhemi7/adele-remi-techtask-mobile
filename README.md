@@ -1,5 +1,53 @@
 __Language :__ English | [Bahasa Indonesia](README_ID.md)
 
+
+## Installing
+To install this app
+
+
+```
+git clone https://github.com/Rhemi7/adele-remi-techtask-mobile.git
+```
+
+And then in terminal install the required dependencies
+
+```
+flutter pub get
+```
+Run the app in the project's root folder of the terminal
+
+```
+flutter run 
+```
+
+## Running the tests
+Open a test file and run test cases in terminal
+
+```
+flutter test --no-sound-null-safety
+```
+
+## App Development Info
+Folder Structure
+
+  - Core: This contains things that were reused throughout the project.
+  - Feature: This is where every major feature in the project is located.
+     - data: all calls made to the remote data/api are included here.
+     - domain: represents bridge between the data layer and presentation layer, here all abstractions are made before being sent to the presentation layer
+     - presentation: includes all classes and methods that make up the screens/pages of the app.
+     
+     
+ ## Plugins
+| Name | Description |
+| --- | --- |
+| Hooks Riverpod | Used for state management |
+| Get it | Dependency Injection |
+| Dartz | Functional programming in Dart |
+| Mockito | Used for testing |
+| Http | Used for making network requests|
+| Equatable | used for showing equality between objects |
+| Date format | Used to format date |
+
 # Mobile Technical Task
 Apps for Lunch Recipes Suggestion
 
