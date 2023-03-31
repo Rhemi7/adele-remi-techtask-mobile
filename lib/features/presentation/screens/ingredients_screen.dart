@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tech_task/features/presentation/notifier/ingredients_notifier/get_ingredients_state.dart';
 import 'package:tech_task/features/presentation/provider/providers.dart';
+import 'package:tech_task/features/presentation/screens/recipe_screen.dart';
 import 'package:tech_task/utils/margin.dart';
 
 import '../../../utils/resolution.dart';
 import '../widgets/button.dart';
 
 class IngredientsScreen extends ConsumerStatefulWidget {
-  const IngredientsScreen({Key? key}) : super(key: key);
+  final String selectedDate;
+  const IngredientsScreen(this.selectedDate, {Key? key}) : super(key: key);
 
   @override
   ConsumerState<IngredientsScreen> createState() => _IngredientsScreenState();
@@ -62,7 +64,7 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                             child: CheckboxListTile(
                               value: values[i],
                               onChanged: (val) {
-                                if (DateTime.now().isAfter(ingredientsState
+                                if (DateTime.parse(widget.selectedDate).isAfter(ingredientsState
                                         .ingredients[i].useBy!) &&
                                     values[i] == false) {
                                   showDialog(
@@ -86,7 +88,8 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                               },
                               title:
                                   Text(ingredientsState.ingredients[i].title!),
-                              subtitle: Text("Expiry Date: ${ingredientsState.ingredients[i].useBy!.toString().split(" ")[0]}"),
+                              subtitle: Text(
+                                  "Expiry Date: ${ingredientsState.ingredients[i].useBy!.toString().split(" ")[0]}"),
                             ),
                           );
                         },
@@ -105,12 +108,14 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                       inActiveButtonColor: Colors.red,
                       text: "Continue",
                       onPressed: () {
-                        // values.forEach((element) {
-                        //   if (element == true) {
-                        //     nameIngredients.add(element)
-                        //   }
-                        // })
-                        // print(values.where((element) => element == true).);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RecipeScreen(
+                              ingredients: nameIngredients.join(","),
+                            ),
+                          ),
+                        );
                       },
                     ),
                   )
