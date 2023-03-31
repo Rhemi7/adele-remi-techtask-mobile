@@ -20,9 +20,9 @@ class _DateScreenState extends ConsumerState<DateScreen> {
     Future<String> selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: DateTime(2009, 1),
         firstDate: DateTime(2003, 1),
-        lastDate: DateTime.now(),
+        lastDate: DateTime(2024, 12),
       );
       return formatDate(picked!, [yyyy, '-', mm, '-', dd]);
     }
