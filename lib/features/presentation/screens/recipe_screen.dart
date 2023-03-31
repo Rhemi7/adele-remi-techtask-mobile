@@ -4,6 +4,7 @@ import 'package:tech_task/features/presentation/notifier/recipes_notifier/get_re
 import 'package:tech_task/utils/margin.dart';
 
 import '../provider/providers.dart';
+import '../widgets/app_error_widget.dart';
 
 class RecipeScreen extends ConsumerStatefulWidget {
   final String ingredients;
@@ -14,12 +15,16 @@ class RecipeScreen extends ConsumerStatefulWidget {
 }
 
 class _RecipeScreenState extends ConsumerState<RecipeScreen> {
+  void init() {
+    ref
+        .watch(getRecipesNotifierProvider.notifier)
+        .getFoodRecipes(widget.ingredients);
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-          .watch(getRecipesNotifierProvider.notifier)
-          .getFoodRecipes(widget.ingredients);
+      init();
     });
     super.initState();
   }
@@ -38,53 +43,61 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
               var recipes = recipeState.recipes;
               return SingleChildScrollView(
                 child: Column(
-                  children: recipes!.map((recipe) => Container(
-                    height: 110,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              recipe.title!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0),
-                            ),
-                            YMargin(5),
-                            Text(
-                              "Recipes",
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.red,
-                                  fontSize: 12),
-                            ),
-                            Expanded(
-                              child: GridView.builder(
-                                gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  // spacing on the vertical axis
-                                  // mainAxisSpacing: 2,
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 2.7 / 0.5,
+                  children: recipes!
+                      .map((recipe) => Container(
+                            height: 110,
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      recipe.title!,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
+                                    YMargin(5),
+                                    Text(
+                                      "Recipes",
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.red,
+                                          fontSize: 12),
+                                    ),
+                                    Expanded(
+                                      child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                          // spacing on the vertical axis
+                                          // mainAxisSpacing: 2,
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 2.7 / 0.5,
+                                        ),
+                                        itemBuilder: (cxt, index) {
+                                          return Text(
+                                              recipe.recipeIngredients![index]);
+                                        },
+                                        itemCount:
+                                            recipe.recipeIngredients?.length,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                itemBuilder: (cxt, index) {
-                                  return Text(recipe.recipeIngredients![index]);
-                                },
-                                itemCount: recipe.recipeIngredients?.length,
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  )).toList(),
+                            ),
+                          ))
+                      .toList(),
                 ),
               );
             } else if (recipeState is GetRecipesError) {
-              return Text(recipeState.message);
+              return AppErrorWidget(
+                  error: recipeState.message,
+                  onTap: () {
+                    init();
+                  });
             }
             return const SizedBox.shrink();
           },
