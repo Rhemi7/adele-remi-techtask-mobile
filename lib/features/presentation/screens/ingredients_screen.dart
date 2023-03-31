@@ -86,6 +86,7 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                               },
                               title:
                                   Text(ingredientsState.ingredients[i].title!),
+                              subtitle: Text("Expiry Date: ${ingredientsState.ingredients[i].useBy!.toString().split(" ")[0]}"),
                             ),
                           );
                         },
