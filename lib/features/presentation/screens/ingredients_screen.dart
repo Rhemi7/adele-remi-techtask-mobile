@@ -50,32 +50,43 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                     child: ListView.separated(
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext cxt, int i) {
-                          return CheckboxListTile(
-                            value: values[i],
-                            onChanged: (val) {
-                              if (DateTime.now().isAfter(
-                                  ingredientsState.ingredients[i].useBy!) && values[i] == false) {
-                                showDialog(
-                                    context: context,
-                                    builder: (builder) => AlertDialog(
-                                      title: Text("Cannot be Added"),
-                                      content: Text(
-                                          '${ingredientsState.ingredients[i].title!} has passed it\'s expiry date and cannot be added. \n \nIf you still wish to select it, please long press the tile.'),
-                                    ));
-                              } else {
-                                values[i] = !values[i];
-                                if (values[i]) {
-                                  nameIngredients.add(ingredientsState
-                                      .ingredients[i].title!);
-                                } else {
-                                  nameIngredients.remove(ingredientsState
-                                      .ingredients[i].title!);
-                                }
-                                setState(() {});
+                          return GestureDetector(
+                            onLongPress: () {
+                              values[i] = true;
+                              if (values[i]) {
+                                nameIngredients.add(
+                                    ingredientsState.ingredients[i].title!);
                               }
+                              setState(() {});
                             },
-                            title: Text(
-                                ingredientsState.ingredients[i].title!),
+                            child: CheckboxListTile(
+                              value: values[i],
+                              onChanged: (val) {
+                                if (DateTime.now().isAfter(ingredientsState
+                                        .ingredients[i].useBy!) &&
+                                    values[i] == false) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (builder) => AlertDialog(
+                                            title: Text("Cannot be Added"),
+                                            content: Text(
+                                                '${ingredientsState.ingredients[i].title!} has passed it\'s expiry date and cannot be added. \n\nIf you still wish to select it, please long press the tile.'),
+                                          ));
+                                } else {
+                                  values[i] = !values[i];
+                                  if (values[i]) {
+                                    nameIngredients.add(
+                                        ingredientsState.ingredients[i].title!);
+                                  } else {
+                                    nameIngredients.remove(
+                                        ingredientsState.ingredients[i].title!);
+                                  }
+                                  setState(() {});
+                                }
+                              },
+                              title:
+                                  Text(ingredientsState.ingredients[i].title!),
+                            ),
                           );
                         },
                         separatorBuilder: (context, index) {
