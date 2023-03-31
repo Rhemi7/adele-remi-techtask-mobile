@@ -1,6 +1,7 @@
 import 'package:date_format/date_format.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_task/features/presentation/screens/ingredients_screen.dart';
 import 'package:tech_task/features/presentation/widgets/button.dart';
 import 'package:tech_task/utils/resolution.dart';
 
@@ -64,6 +65,16 @@ class _DateScreenState extends ConsumerState<DateScreen> {
               width: Resolution.screenWidth(context),
               inActiveButtonColor: Colors.red,
               text: "Continue",
+              onPressed: () {
+                print("Date $selectedDate");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => IngredientsScreen(
+                            selectedDate!.isEmpty
+                                ? DateTime.now().toString()
+                                : selectedDate!)));
+              },
             )
           ],
         ),
