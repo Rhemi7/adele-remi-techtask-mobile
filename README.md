@@ -49,6 +49,16 @@ Folder Structure
 | Equatable | used for showing equality between objects |
 | Date format | Used to format date |
 
+ ## Screenshots
+ 
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-03-31 at 08 15 58](https://user-images.githubusercontent.com/54381642/229065165-f1131ab7-1e44-406c-b4e8-529edb7b76c4.png)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-03-31 at 08 16 05](https://user-images.githubusercontent.com/54381642/229065186-fd7c2695-57c7-43ad-93d3-a2dfa6abd9ac.png)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-03-31 at 08 16 30](https://user-images.githubusercontent.com/54381642/229065221-7cb8273a-e7a4-44b8-b955-50a15cc2e1ca.png)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-03-31 at 08 17 29](https://user-images.githubusercontent.com/54381642/229065270-872a8cd1-331b-400f-9896-cd90dd3fb816.png)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-03-31 at 08 16 38](https://user-images.githubusercontent.com/54381642/229065313-17e688bc-c061-406b-beb7-144001464fa9.png)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-03-31 at 08 16 44](https://user-images.githubusercontent.com/54381642/229065344-bb2302ba-440e-401b-bf5e-d02c4a562f5b.png)
+
+
 # Mobile Technical Task
 Apps for Lunch Recipes Suggestion
 
