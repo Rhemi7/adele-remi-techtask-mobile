@@ -16,6 +16,7 @@ class IngredientsScreen extends ConsumerStatefulWidget {
 
 class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
   List<bool> values = [];
+  List<String> nameIngredients = [];
 
   @override
   void initState() {
@@ -46,30 +47,47 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
               return Column(
                 children: [
                   Expanded(
-                      child: ListView.separated(
+                    child: ListView.separated(
                         padding: EdgeInsets.zero,
-                          itemBuilder: (BuildContext cxt, int i) {
-                            return CheckboxListTile(
-                              value: values[i],
-                              onChanged: (val) {
-                                values[i] = !values[i];
-                                setState(() {});
-                              },
-                              title: Text(ingredientsState.ingredients[i].title!),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return YMargin(10);
-                          },
-                          itemCount: ingredientsState.ingredients.length)),
+                        itemBuilder: (BuildContext cxt, int i) {
+                          return CheckboxListTile(
+                            value: values[i],
+                            onChanged: (val) {
+                              values[i] = !values[i];
+                              if (values[i]) {
+                                nameIngredients.add(
+                                    ingredientsState.ingredients[i].title!);
+                              } else {
+                                nameIngredients.remove(
+                                    ingredientsState.ingredients[i].title!);
+                              }
+                              setState(() {});
+                            },
+                            title: Text(ingredientsState.ingredients[i].title!),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return YMargin(10);
+                        },
+                        itemCount: ingredientsState.ingredients.length),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 20.0),
                     child: PrimaryButton(
                       color: Colors.red,
                       width: Resolution.screenWidth(context),
                       paddingHoriz: 25,
                       inActiveButtonColor: Colors.red,
                       text: "Continue",
+                      onPressed: () {
+                        // values.forEach((element) {
+                        //   if (element == true) {
+                        //     nameIngredients.add(element)
+                        //   }
+                        // })
+                        // print(values.where((element) => element == true).);
+                      },
                     ),
                   )
                 ],
