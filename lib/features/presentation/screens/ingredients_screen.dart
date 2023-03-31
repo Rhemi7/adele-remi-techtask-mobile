@@ -17,7 +17,6 @@ class IngredientsScreen extends ConsumerStatefulWidget {
 }
 
 class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
-
   // Every ingredient gotten from the server would have a corresponding boolean in this list
   List<bool> values = [];
 
@@ -110,18 +109,20 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                       color: Colors.red,
                       width: Resolution.screenWidth(context),
                       paddingHoriz: 25,
-                      inActiveButtonColor: Colors.red,
+                      inActiveButtonColor: Colors.red.withOpacity(0.4),
                       text: "Continue",
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RecipeScreen(
-                              ingredients: nameIngredients.join(","),
-                            ),
-                          ),
-                        );
-                      },
+                      onPressed: nameIngredients.isEmpty
+                          ? null
+                          : () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RecipeScreen(
+                                    ingredients: nameIngredients.join(","),
+                                  ),
+                                ),
+                              );
+                            },
                     ),
                   )
                 ],
