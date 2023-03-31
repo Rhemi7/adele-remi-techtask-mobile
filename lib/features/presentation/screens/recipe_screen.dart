@@ -27,6 +27,7 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Recipes")),
       body: SafeArea(
         child: Consumer(
           builder: (BuildContext context, WidgetRef ref, Widget? child) {

@@ -17,7 +17,11 @@ class IngredientsScreen extends ConsumerStatefulWidget {
 }
 
 class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
+
+  // Every ingredient gotten from the server would have a corresponding boolean in this list
   List<bool> values = [];
+
+  //Ingredients selected will be added to this list
   List<String> nameIngredients = [];
 
   @override
@@ -39,6 +43,9 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Ingredients"),
+      ),
       body: SafeArea(
         child: Consumer(
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
