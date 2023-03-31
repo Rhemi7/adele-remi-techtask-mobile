@@ -20,7 +20,7 @@ class CacheException implements Exception {}
 String mapFailureToMessage(Failure failure) {
   switch (failure.runtimeType) {
     case ServerFailure:
-      return 'Server Error';
+      return 'The Connection was Unsuccessful';
     case CacheFailure:
       return 'No internet connection';
     default:

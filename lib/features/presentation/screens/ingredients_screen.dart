@@ -23,6 +23,27 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
   //Ingredients selected will be added to this list
   List<String> nameIngredients = [];
 
+  void showCustomDialog(String name) {
+    showDialog(
+        context: context,
+        builder: (builder) => AlertDialog(
+          title: Text("Cannot be Added"),
+          content: Text(
+              '$name has passed it\'s expiry date and cannot be added. \n\nIf you still wish to select it, please long press the tile.'),
+        ));
+  }
+
+  void handleSelected({required bool value, required String title}) {
+    //If value is true, add name to list
+    //If false, remove from list
+    if (value) {
+      nameIngredients.add(title);
+    } else {
+      nameIngredients.remove(title);
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -32,6 +53,9 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
           .then((value) {
         for (var item
             in ref.watch(getIngredientsNotifierProvider.notifier).items) {
+
+          //After getting the list of ingredients
+          // A list is created where false is assigned to every item
           values.add(false);
         }
       });
@@ -62,6 +86,8 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
 
                           return GestureDetector(
                             onLongPress: () {
+
+                              //Long press to add an ingredient that has expired
                               values[i] = true;
                               if (values[i]) {
                                 nameIngredients.add(ingredient.title!);
@@ -74,21 +100,13 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                                 if (DateTime.parse(widget.selectedDate)
                                         .isAfter(ingredient.useBy!) &&
                                     values[i] == false) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (builder) => AlertDialog(
-                                            title: Text("Cannot be Added"),
-                                            content: Text(
-                                                '${ingredient.title!} has passed it\'s expiry date and cannot be added. \n\nIf you still wish to select it, please long press the tile.'),
-                                          ));
+
+                                  //Show dialog to inform user of expired ingredients
+                                  showCustomDialog(ingredient.title!);
+
                                 } else {
                                   values[i] = !values[i];
-                                  if (values[i]) {
-                                    nameIngredients.add(ingredient.title!);
-                                  } else {
-                                    nameIngredients.remove(ingredient.title!);
-                                  }
-                                  setState(() {});
+                                 handleSelected(value: values[i], title: ingredient.title!);
                                 }
                               },
                               title: Text(ingredient.title!),
@@ -118,6 +136,9 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RecipeScreen(
+                                    
+                                    //This joins the strings items in the List
+                                    //And separate them with a comma
                                     ingredients: nameIngredients.join(","),
                                   ),
                                 ),

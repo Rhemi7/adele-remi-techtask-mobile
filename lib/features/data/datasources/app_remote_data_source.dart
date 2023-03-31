@@ -19,26 +19,34 @@ class AppRemoteDataSourceImpl implements AppRemoteDataSource {
 
   @override
   Future<List<Ingredient>> getIngredients() async {
-    var response = await client.get(
-      Uri.parse('${Constant.baseUrl}/ingredients/'),
-    );
-    if (response.statusCode.toString().startsWith("2")) {
-      var data = ingredientFromJson(response.body);
-      return data;
-    } else {
+    try {
+      var response = await client.get(
+        Uri.parse('${Constant.baseUrl}/ingredients/'),
+      );
+      if (response.statusCode.toString().startsWith("2")) {
+        var data = ingredientFromJson(response.body);
+        return data;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
       throw ServerException();
     }
   }
 
   @override
   Future<List<Recipe>> getRecipes(String ingredients) async {
-    var response = await client.get(
-      Uri.parse('${Constant.baseUrl}/recipes?ingredients=$ingredients'),
-    );
-    if (response.statusCode.toString().startsWith("2")) {
-      var data = recipeFromJson(response.body);
-      return data;
-    } else {
+    try {
+      var response = await client.get(
+        Uri.parse('${Constant.baseUrl}/recipes?ingredients=$ingredients'),
+      );
+      if (response.statusCode.toString().startsWith("2")) {
+        var data = recipeFromJson(response.body);
+        return data;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
       throw ServerException();
     }
   }
