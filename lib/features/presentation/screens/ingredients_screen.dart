@@ -52,44 +52,42 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                     child: ListView.separated(
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext cxt, int i) {
+                          var ingredient = ingredientsState.ingredients[i];
+
                           return GestureDetector(
                             onLongPress: () {
                               values[i] = true;
                               if (values[i]) {
-                                nameIngredients.add(
-                                    ingredientsState.ingredients[i].title!);
+                                nameIngredients.add(ingredient.title!);
                               }
                               setState(() {});
                             },
                             child: CheckboxListTile(
                               value: values[i],
                               onChanged: (val) {
-                                if (DateTime.parse(widget.selectedDate).isAfter(ingredientsState
-                                        .ingredients[i].useBy!) &&
+                                if (DateTime.parse(widget.selectedDate)
+                                        .isAfter(ingredient.useBy!) &&
                                     values[i] == false) {
                                   showDialog(
                                       context: context,
                                       builder: (builder) => AlertDialog(
                                             title: Text("Cannot be Added"),
                                             content: Text(
-                                                '${ingredientsState.ingredients[i].title!} has passed it\'s expiry date and cannot be added. \n\nIf you still wish to select it, please long press the tile.'),
+                                                '${ingredient.title!} has passed it\'s expiry date and cannot be added. \n\nIf you still wish to select it, please long press the tile.'),
                                           ));
                                 } else {
                                   values[i] = !values[i];
                                   if (values[i]) {
-                                    nameIngredients.add(
-                                        ingredientsState.ingredients[i].title!);
+                                    nameIngredients.add(ingredient.title!);
                                   } else {
-                                    nameIngredients.remove(
-                                        ingredientsState.ingredients[i].title!);
+                                    nameIngredients.remove(ingredient.title!);
                                   }
                                   setState(() {});
                                 }
                               },
-                              title:
-                                  Text(ingredientsState.ingredients[i].title!),
+                              title: Text(ingredient.title!),
                               subtitle: Text(
-                                  "Expiry Date: ${ingredientsState.ingredients[i].useBy!.toString().split(" ")[0]}"),
+                                  "Expiry Date: ${ingredient.useBy!.toString().split(" ")[0]}"),
                             ),
                           );
                         },
