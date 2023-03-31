@@ -53,17 +53,29 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                           return CheckboxListTile(
                             value: values[i],
                             onChanged: (val) {
-                              values[i] = !values[i];
-                              if (values[i]) {
-                                nameIngredients.add(
-                                    ingredientsState.ingredients[i].title!);
+                              if (DateTime.now().isAfter(
+                                  ingredientsState.ingredients[i].useBy!) && values[i] == false) {
+                                showDialog(
+                                    context: context,
+                                    builder: (builder) => AlertDialog(
+                                      title: Text("Cannot be Added"),
+                                      content: Text(
+                                          '${ingredientsState.ingredients[i].title!} has passed it\'s expiry date and cannot be added. \n \nIf you still wish to select it, please long press the tile.'),
+                                    ));
                               } else {
-                                nameIngredients.remove(
-                                    ingredientsState.ingredients[i].title!);
+                                values[i] = !values[i];
+                                if (values[i]) {
+                                  nameIngredients.add(ingredientsState
+                                      .ingredients[i].title!);
+                                } else {
+                                  nameIngredients.remove(ingredientsState
+                                      .ingredients[i].title!);
+                                }
+                                setState(() {});
                               }
-                              setState(() {});
                             },
-                            title: Text(ingredientsState.ingredients[i].title!),
+                            title: Text(
+                                ingredientsState.ingredients[i].title!),
                           );
                         },
                         separatorBuilder: (context, index) {
