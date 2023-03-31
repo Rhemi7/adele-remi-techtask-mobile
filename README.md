@@ -3,6 +3,7 @@ __Language :__ English | [Bahasa Indonesia](README_ID.md)
 
 ## Installing
 To install this app
+- Flutter Version: 3.3.6
 
 
 ```
