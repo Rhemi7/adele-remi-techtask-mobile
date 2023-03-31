@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tech_task/features/presentation/notifier/ingredients_notifier/get_ingredients_state.dart';
 import 'package:tech_task/features/presentation/provider/providers.dart';
 import 'package:tech_task/features/presentation/screens/recipe_screen.dart';
+import 'package:tech_task/features/presentation/widgets/app_error_widget.dart';
 import 'package:tech_task/utils/margin.dart';
 
 import '../../../utils/resolution.dart';
@@ -27,10 +28,10 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
     showDialog(
         context: context,
         builder: (builder) => AlertDialog(
-          title: Text("Cannot be Added"),
-          content: Text(
-              '$name has passed it\'s expiry date and cannot be added. \n\nIf you still wish to select it, please long press the tile.'),
-        ));
+              title: Text("Cannot be Added"),
+              content: Text(
+                  '$name has passed it\'s expiry date and cannot be added. \n\nIf you still wish to select it, please long press the tile.'),
+            ));
   }
 
   void handleSelected({required bool value, required String title}) {
@@ -44,21 +45,24 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
     setState(() {});
   }
 
+  void init() {
+    ref
+        .watch(getIngredientsNotifierProvider.notifier)
+        .getFridgeIngredient()
+        .then((value) {
+      for (var item
+          in ref.watch(getIngredientsNotifierProvider.notifier).items) {
+        //After getting the list of ingredients
+        // A list is created where false is assigned to every item
+        values.add(false);
+      }
+    });
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-          .watch(getIngredientsNotifierProvider.notifier)
-          .getFridgeIngredient()
-          .then((value) {
-        for (var item
-            in ref.watch(getIngredientsNotifierProvider.notifier).items) {
-
-          //After getting the list of ingredients
-          // A list is created where false is assigned to every item
-          values.add(false);
-        }
-      });
+      init();
     });
     super.initState();
   }
@@ -86,7 +90,6 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
 
                           return GestureDetector(
                             onLongPress: () {
-
                               //Long press to add an ingredient that has expired
                               values[i] = true;
                               if (values[i]) {
@@ -100,13 +103,13 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                                 if (DateTime.parse(widget.selectedDate)
                                         .isAfter(ingredient.useBy!) &&
                                     values[i] == false) {
-
                                   //Show dialog to inform user of expired ingredients
                                   showCustomDialog(ingredient.title!);
-
                                 } else {
                                   values[i] = !values[i];
-                                 handleSelected(value: values[i], title: ingredient.title!);
+                                  handleSelected(
+                                      value: values[i],
+                                      title: ingredient.title!);
                                 }
                               },
                               title: Text(ingredient.title!),
@@ -136,7 +139,6 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RecipeScreen(
-                                    
                                     //This joins the strings items in the List
                                     //And separate them with a comma
                                     ingredients: nameIngredients.join(","),
@@ -149,7 +151,11 @@ class _IngredientsScreenState extends ConsumerState<IngredientsScreen> {
                 ],
               );
             } else if (ingredientsState is GetIngredientsError) {
-              return Text(ingredientsState.message);
+              return AppErrorWidget(
+                  error: ingredientsState.message,
+                  onTap: () {
+                    init();
+                  });
             }
             return const SizedBox.shrink();
           },
